@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Products } from '../entities/product.entity';
-import { DeleteResult, ILike, Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CategoriesService } from '../../category/services/category.service';
 
 @Injectable()
@@ -25,9 +25,9 @@ export class ProductsService {
       throw new HttpException('Produto não encontrado!', HttpStatus.NOT_FOUND);
     return product;
   }
-  async findProductsByCategory(category: string): Promise<Products[]> {
+  async findActiveProducts(active: boolean): Promise<Products[]> {
     return await this.productsRepository.find({
-      where: { category: ILike(`%${category}%`) },
+      where: { is_active: active },
       relations: { category: true },
     });
   }

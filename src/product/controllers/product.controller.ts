@@ -26,12 +26,13 @@ export class ProductsController {
   findProductById(@Param('id', ParseIntPipe) id: number): Promise<Products> {
     return this.productsService.findProductById(id);
   }
-  @Get('/categoria/:category')
+  @Get('/disponiveis/:is_active')
   @HttpCode(HttpStatus.OK)
-  findProductByCategory(
-    @Param('category') category: string,
+  findActiveProducts(
+    @Param('is_active') is_active: string,
   ): Promise<Products[]> {
-    return this.productsService.findProductsByCategory(category);
+    const active = is_active === 'true';
+    return this.productsService.findActiveProducts(active);
   }
   @Post()
   @HttpCode(HttpStatus.CREATED)
