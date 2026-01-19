@@ -14,7 +14,7 @@ import { Categories } from '../../category/entities/category.entity';
 @Check(`"stock" >= 0`)
 export class Products {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @IsNotEmpty()
   @Column({ length: 200, nullable: false })
