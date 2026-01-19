@@ -1,5 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import {
+  Check,
   Column,
   Entity,
   JoinColumn,
@@ -9,6 +10,8 @@ import {
 import { Categories } from '../../category/entities/category.entity';
 
 @Entity({ name: 'tb_products' })
+@Check(`"price" >= 0`)
+@Check(`"stock" >= 0`)
 export class Products {
   @PrimaryGeneratedColumn()
   id: string;
@@ -24,6 +27,7 @@ export class Products {
     type: 'decimal',
     precision: 10,
     scale: 2,
+    default: 0,
   })
   price: string;
 

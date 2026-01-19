@@ -14,7 +14,7 @@ export class Categories {
   @Column({ type: 'text' })
   description: string;
 
-  @Column({ length: 150, default: 'no slug defined' })
+  @Column({ length: 150, default: 'no slug defined', unique: true })
   slug: string;
 
   @Column({ type: 'boolean', default: true })
