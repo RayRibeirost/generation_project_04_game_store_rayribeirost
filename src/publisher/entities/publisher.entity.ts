@@ -1,5 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Products } from '../../product/entities/product.entity';
 
 @Entity({ name: 'tb_publishers' })
 export class Publishers {
@@ -12,4 +13,7 @@ export class Publishers {
 
   @Column({ type: 'text' })
   description: string;
+
+  @OneToMany(() => Products, (product) => product.publisher)
+  products: Products[];
 }

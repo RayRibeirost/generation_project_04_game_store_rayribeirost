@@ -2,9 +2,11 @@ import { IsNotEmpty } from 'class-validator';
 import {
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Comments } from '../../comment/entities/comment.entity';
 
 @Entity({ name: 'tb_users' })
 export class Users {
@@ -21,4 +23,7 @@ export class Users {
 
   @UpdateDateColumn({ type: 'timestamptz' })
   created_at: Date;
+
+  @OneToMany(() => Comments, (comment) => comment.user)
+  comments: Comments[];
 }
