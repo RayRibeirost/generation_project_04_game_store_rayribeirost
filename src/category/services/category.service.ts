@@ -26,12 +26,6 @@ export class CategoriesService {
       );
     return category;
   }
-  async findAllActiveCategories(): Promise<Categories[]> {
-    return this.categoriesRepository.find({
-      where: { is_active: true },
-      relations: { products: true },
-    });
-  }
   async createCategory(category: Categories): Promise<Categories> {
     return await this.categoriesRepository.save(category);
   }

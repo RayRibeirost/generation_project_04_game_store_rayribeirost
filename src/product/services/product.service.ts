@@ -16,7 +16,7 @@ export class ProductsService {
       relations: { category: true },
     });
   }
-  async findProductById(id: number): Promise<Products> {
+  async findProductById(id: string): Promise<Products> {
     const product = await this.productsRepository.findOne({
       where: { id },
       relations: { category: true },
@@ -24,12 +24,6 @@ export class ProductsService {
     if (!product)
       throw new HttpException('Produto não encontrado!', HttpStatus.NOT_FOUND);
     return product;
-  }
-  async findActiveProducts(active: boolean): Promise<Products[]> {
-    return await this.productsRepository.find({
-      where: { is_active: active },
-      relations: { category: true },
-    });
   }
   async createProduct(product: Products): Promise<Products> {
     await this.categoriesService.findCategoryById(product.category.id);
@@ -40,7 +34,7 @@ export class ProductsService {
     await this.categoriesService.findCategoryById(product.category.id);
     return await this.productsRepository.save(product);
   }
-  async deleteProduct(id: number): Promise<DeleteResult> {
+  async deleteProduct(id: string): Promise<DeleteResult> {
     await this.findProductById(id);
     return await this.productsRepository.delete(id);
   }

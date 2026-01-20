@@ -26,11 +26,6 @@ export class CategoriesController {
   findCategoryById(@Param('id', ParseIntPipe) id: number): Promise<Categories> {
     return this.categoriesService.findCategoryById(id);
   }
-  @Get('/is_active')
-  @HttpCode(HttpStatus.OK)
-  findAllActiveCategories(): Promise<Categories[]> {
-    return this.categoriesService.findAllActiveCategories();
-  }
   @Post()
   @HttpCode(HttpStatus.CREATED)
   createCategory(@Body() category: Categories): Promise<Categories> {
