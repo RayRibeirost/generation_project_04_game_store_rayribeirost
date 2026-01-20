@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Products } from '../entities/product.entity';
 import { DeleteResult, Repository } from 'typeorm';
 import { CategoriesService } from '../../category/services/category.service';
+import { PublishersService } from '../../publisher/services/publisher.service';
 
 @Injectable()
 export class ProductsService {
@@ -10,16 +11,17 @@ export class ProductsService {
     @InjectRepository(Products)
     private productsRepository: Repository<Products>,
     private categoriesService: CategoriesService,
+    private publishersService: PublishersService,
   ) {}
   async findAllProducts(): Promise<Products[]> {
     return await this.productsRepository.find({
-      relations: { category: true },
+      relations: { category: true, publisher: true },
     });
   }
   async findProductById(id: string): Promise<Products> {
     const product = await this.productsRepository.findOne({
       where: { id },
-      relations: { category: true },
+      relations: { category: true, publisher: true },
     });
     if (!product)
       throw new HttpException('Produto não encontrado!', HttpStatus.NOT_FOUND);
@@ -27,11 +29,13 @@ export class ProductsService {
   }
   async createProduct(product: Products): Promise<Products> {
     await this.categoriesService.findCategoryById(product.category.id);
+    await this.publishersService.findPublisherById(product.publisher.id);
     return await this.productsRepository.save(product);
   }
   async updateProduct(product: Products): Promise<Products> {
     await this.findProductById(product.id);
     await this.categoriesService.findCategoryById(product.category.id);
+    await this.publishersService.findPublisherById(product.publisher.id);
     return await this.productsRepository.save(product);
   }
   async deleteProduct(id: string): Promise<DeleteResult> {

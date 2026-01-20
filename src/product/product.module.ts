@@ -14,6 +14,6 @@ import { PublisherModule } from '../publisher/publisher.module';
   ],
   providers: [ProductsService],
   controllers: [ProductsController],
-  exports: [],
+  exports: [ProductsService],
 })
 export class ProductModule {}
