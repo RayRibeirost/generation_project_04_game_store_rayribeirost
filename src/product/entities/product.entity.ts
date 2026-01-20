@@ -14,8 +14,8 @@ import { Categories } from '../../category/entities/category.entity';
 @Check(`"price" >= 0`)
 @Check(`"stock" >= 0`)
 export class Products {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @IsNotEmpty()
   @Column({ length: 200, nullable: false })
@@ -40,9 +40,6 @@ export class Products {
 
   @UpdateDateColumn({ type: 'timestamptz' })
   created_at: Date;
-
-  @UpdateDateColumn({ type: 'timestamptz' })
-  updated_at: Date;
 
   @ManyToOne(() => Categories, (category) => category.products, {
     nullable: false,
